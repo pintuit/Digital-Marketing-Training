@@ -747,33 +747,19 @@
         */
 
 
-        const response =
-          await fetch(
-            "http://localhost:5000/api/certificate",
-            {
-
-              method: "POST",
-
-              headers: {
-
-                "Content-Type":
-                  "application/json"
-
-              },
-
-              body:
-                JSON.stringify({
-
-                  email:
-                    userEmail,
-
-                  course:
-                    selectedCourse
-
-                })
-
-            }
-          );
+        const response = await fetch(
+    "https://digitallearn-backend.onrender.com/api/certificate",
+    {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            email: userEmail,
+            course: selectedCourse
+        })
+    }
+);
 
 
 
