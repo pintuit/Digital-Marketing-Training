@@ -406,9 +406,8 @@
 
   <script>
 
-    // ==========================================
     // SELECTED COURSE
-    // ==========================================
+  
 
     const selectedCourse =
       localStorage.getItem("selectedCourse")
@@ -419,9 +418,9 @@
       selectedCourse;
 
 
-    // ==========================================
+    
     // LESSONS
-    // ==========================================
+    
 
     const lessons = [
 
@@ -677,19 +676,14 @@
 
     ];
 
-
-    // ==========================================
     // VARIABLES
-    // ==========================================
+    
 
     let currentLesson = 0;
 
     let completedLessons = [];
 
-
-    // ==========================================
     // CREATE LESSON LIST
-    // ==========================================
 
     function createLessonList() {
 
@@ -720,10 +714,8 @@
 
     }
 
-
-    // ==========================================
     // SHOW LESSON
-    // ==========================================
+
 
     function showLesson(index) {
 
@@ -754,10 +746,8 @@
 
     }
 
-
-    // ==========================================
     // UPDATE LESSON LIST
-    // ==========================================
+  
 
     function updateLessonList() {
 
@@ -793,10 +783,7 @@
 
     }
 
-
-    // ==========================================
     // COMPLETE LESSON
-    // ==========================================
 
     async function completeCurrentLesson() {
 
@@ -830,11 +817,8 @@
       }
 
     }
-
-
-    // ==========================================
     // COMPLETE BUTTON
-    // ==========================================
+    
 
     function updateCompleteButton() {
 
@@ -858,10 +842,8 @@
 
     }
 
-
-    // ==========================================
     // UPDATE PROGRESS
-    // ==========================================
+  
 
     function updateProgress() {
 
@@ -900,10 +882,7 @@
 
     }
 
-
-    // ==========================================
     // SAVE COURSE PROGRESS
-    // ==========================================
 
     async function saveProgress() {
 
@@ -986,11 +965,8 @@
       }
 
     }
-
-
-    // ==========================================
     // LOAD COURSE PROGRESS
-    // ==========================================
+    
 
     async function loadProgress() {
 
@@ -1013,7 +989,7 @@
 
         const response =
           await fetch(
-            `http://localhost:5000/api/user/${encodeURIComponent(email)}`
+            `https://digitallearn-backend.onrender.com/api/user/${encodeURIComponent(email)}`
           );
 
 
