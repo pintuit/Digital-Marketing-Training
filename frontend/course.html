@@ -908,7 +908,7 @@
       try {
 
         const response =
-          await fetch("http://localhost:5000/api/progress", {
+          await fetch("https://digitallearn-backend.onrender.com/api/progress", {
 
             method: "PUT",
 
@@ -1119,17 +1119,11 @@
     // NEXT
     // ==========================================
 
-    function nextLesson() {
-
-      if (currentLesson < lessons.length - 1) {
-
-        showLesson(
-          currentLesson + 1
-        );
-
-      }
-
+  function nextLesson() {
+    if (currentLesson < lessons.length - 1) {
+        showLesson(currentLesson + 1);
     }
+}
 
 
     // ==========================================
