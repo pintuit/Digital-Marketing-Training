@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | DigitalLearn</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #eef2ff, #f0fdf4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: white;
+            width: 100%;
+            max-width: 520px;
+            padding: 55px 40px;
+            border-radius: 18px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            text-align: center;
+            margin: 0 0 35px;
+            font-size: 34px;
+            color: #111827;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #374151;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 9px;
+            font-size: 16px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 50px;
+        }
+
+        .show-password {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 20px;
+            color: #4b5563;
+            user-select: none;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: #00875a;
+            color: white;
+            border: none;
+            border-radius: 9px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: 0.2s;
+            margin-top: 5px;
+        }
+
+        .login-btn:hover {
+            background: #006f4a;
+        }
+
+        .login-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        #message {
+            text-align: center;
+            margin-top: 20px;
+            min-height: 22px;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .register-link {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: #6d28d9;
+            font-size: 16px;
+        }
+
+        .register-link:hover {
+            color: #4c1d95;
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #2563eb;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .login-box {
+                padding: 40px 25px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <div class="brand">
+            DigitalLearn
+        </div>
+
+        <h1>Login</h1>
+
+        <form id="loginForm">
+
+            <div class="form-group">
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <div class="password-wrapper">
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <span
+                        class="show-password"
+                        id="showPassword"
+                        onclick="togglePassword()">
+                        👁
+                    </span>
+
+                </div>
+
+            </div>
+
+            <button
+                type="submit"
+                class="login-btn"
+                id="loginButton">
+                Login
+            </button>
+
+        </form>
+
+        <p id="message"></p>
+
+        <a
+            href="register.html"
+            class="register-link">
+            Don't have an account? Register
+        </a>
+
+    </div>
+
+
+    <script>
+
+        // ==========================================
+        // PASSWORD SHOW / HIDE
+        // ==========================================
+
+        function togglePassword() {
+
+            const passwordInput =
+                document.getElementById("password");
+
+            const showPassword =
+                document.getElementById("showPassword");
+
+            if (passwordInput.type === "password") {
+
+                passwordInput.type = "text";
+                showPassword.textContent = "🙈";
+
+            } else {
+
+                passwordInput.type = "password";
+                showPassword.textContent = "👁";
+
+            }
+
+        }
+
+
+        // ==========================================
+        // LOGIN
+        // ==========================================
+
+        document
+            .getElementById("loginForm")
+            .addEventListener("submit", async function(event) {
+
+                event.preventDefault();
+
+
+                const email =
+                    document
+                        .getElementById("email")
+                        .value
+                        .trim()
+                        .toLowerCase();
+
+
+                const password =
+                    document
+                        .getElementById("password")
+                        .value;
+
+
+                const message =
+                    document.getElementById("message");
+
+
+                const loginButton =
+                    document.getElementById("loginButton");
+
+
+                // Clear old message
+
+                message.textContent = "";
+
+
+                // Disable button
+
+                loginButton.disabled = true;
+                loginButton.textContent = "Logging in...";
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "http://localhost:5000/api/login",
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+
+                                body: JSON.stringify({
+                                    email: email,
+                                    password: password
+                                })
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    // ==================================
+                    // LOGIN SUCCESS
+                    // ==================================
+
+                    if (response.ok) {
+
+                        // Save email
+
+                        localStorage.setItem(
+                            "userEmail",
+                            email
+                        );
+
+
+                        // Save JWT token
+
+                        if (data.token) {
+
+                            localStorage.setItem(
+                                "token",
+                                data.token
+                            );
+
+                        }
+
+
+                        // Save user information
+
+                        if (data.user) {
+
+                            localStorage.setItem(
+                                "user",
+                                JSON.stringify(data.user)
+                            );
+
+                        }
+
+
+                        // Show success message
+
+                        message.style.color = "#00875a";
+
+                        message.textContent =
+                            data.message ||
+                            "Login successful";
+
+
+                        // ==================================
+                        // IMPORTANT:
+                        // REDIRECT TO DASHBOARD
+                        // ==================================
+
+                        setTimeout(function() {
+
+                            window.location.href =
+                                "dashboard.html";
+
+                        }, 500);
+
+
+                    } else {
+
+                        // ==================================
+                        // LOGIN FAILED
+                        // ==================================
+
+                        message.style.color = "#dc2626";
+
+                        message.textContent =
+                            data.message ||
+                            "Invalid email or password.";
+
+                        loginButton.disabled = false;
+
+                        loginButton.textContent =
+                            "Login";
+
+                    }
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Login error:",
+                        error
+                    );
+
+
+                    message.style.color = "#dc2626";
+
+                    message.textContent =
+                        "Unable to connect to server. Please make sure the backend is running.";
+
+
+                    loginButton.disabled = false;
+
+                    loginButton.textContent =
+                        "Login";
+
+                }
+
+            });
+
+    </script>
+
+</body>
+</html>

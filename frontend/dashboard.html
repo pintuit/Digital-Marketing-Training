@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Dashboard | DigitalLearn</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #1f2937;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      color: white;
+      padding: 18px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .user-name {
+      font-weight: bold;
+    }
+
+    .logout-btn {
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.18);
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .logout-btn:hover {
+      background: rgba(255,255,255,0.30);
+    }
+
+    /* CONTAINER */
+    .container {
+      width: 92%;
+      max-width: 1250px;
+      margin: 35px auto;
+    }
+
+    /* WELCOME */
+    .welcome {
+      background: linear-gradient(135deg, #ffffff, #eef2ff);
+      border-radius: 20px;
+      padding: 35px;
+      margin-bottom: 25px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+    }
+
+    .welcome h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+      color: #111827;
+    }
+
+    .welcome p {
+      color: #6b7280;
+      line-height: 1.6;
+    }
+
+    /* STATS */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 5px 18px rgba(0,0,0,0.06);
+    }
+
+    .stat-card h3 {
+      font-size: 30px;
+      color: #2563eb;
+      margin-bottom: 7px;
+    }
+
+    .stat-card p {
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    /* OVERALL PROGRESS */
+    .overall {
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+    }
+
+    .overall-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .overall-top h2 {
+      font-size: 20px;
+    }
+
+    .overall-percent {
+      color: #2563eb;
+      font-weight: bold;
+    }
+
+    .progress-bg {
+      width: 100%;
+      height: 14px;
+      background: #e5e7eb;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #2563eb, #7c3aed);
+      border-radius: 20px;
+      transition: width 0.5s ease;
+    }
+
+    /* SECTION TITLE */
+    .section-title {
+      font-size: 25px;
+      margin-bottom: 20px;
+    }
+
+    /* COURSES */
+    .courses {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .course-card {
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+      transition: 0.25s;
+    }
+
+    .course-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.10);
+    }
+
+    .course-icon {
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #eef2ff;
+      border-radius: 12px;
+      font-size: 25px;
+      margin-bottom: 15px;
+    }
+
+    .course-card h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    .course-card p {
+      color: #6b7280;
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+
+    .course-progress-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .course-progress-bg {
+      width: 100%;
+      height: 9px;
+      background: #e5e7eb;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+
+    .course-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #2563eb, #7c3aed);
+      border-radius: 20px;
+      transition: width 0.4s ease;
+    }
+
+    .course-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .lesson-status {
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    .course-btn {
+      border: none;
+      padding: 10px 17px;
+      border-radius: 8px;
+      background: #2563eb;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .course-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .completed-badge {
+      color: #15803d;
+      font-weight: bold;
+    }
+
+    /* PROFILE */
+    .profile {
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      margin-top: 30px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+    }
+
+    .profile h2 {
+      margin-bottom: 18px;
+    }
+
+    .profile-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 13px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .profile-row:last-child {
+      border-bottom: none;
+    }
+
+    .profile-label {
+      color: #6b7280;
+    }
+
+    .profile-value {
+      font-weight: bold;
+    }
+
+    /* CERTIFICATE */
+    .certificate {
+      margin-top: 30px;
+      padding: 30px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #ecfdf5, #eff6ff);
+      border: 1px solid #bbf7d0;
+      text-align: center;
+    }
+
+    .certificate h2 {
+      color: #166534;
+      margin-bottom: 10px;
+    }
+
+    .certificate p {
+      color: #4b5563;
+      margin-bottom: 18px;
+    }
+
+    .certificate button {
+      border: none;
+      padding: 12px 22px;
+      border-radius: 9px;
+      background: #7c3aed;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .certificate button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    /* LOADING */
+    .loading {
+      text-align: center;
+      padding: 30px;
+      color: #6b7280;
+    }
+
+    /* FOOTER */
+    footer {
+      margin-top: 50px;
+      padding: 25px;
+      background: #111827;
+      color: #9ca3af;
+      text-align: center;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .courses {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+
+      header {
+        padding: 15px 4%;
+      }
+
+      .logo {
+        font-size: 20px;
+      }
+
+      .user-name {
+        display: none;
+      }
+
+      .container {
+        width: 94%;
+        margin: 20px auto;
+      }
+
+      .welcome {
+        padding: 25px;
+      }
+
+      .welcome h1 {
+        font-size: 25px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .stat-card {
+        padding: 18px;
+      }
+
+      .stat-card h3 {
+        font-size: 25px;
+      }
+
+      .profile-row {
+        flex-direction: column;
+        gap: 5px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+
+    <div class="logo">
+      DigitalLearn
+    </div>
+
+    <div class="header-right">
+
+      <span
+        class="user-name"
+        id="headerUserName">
+        Student
+      </span>
+
+      <button
+        class="logout-btn"
+        onclick="logout()">
+        Logout
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <main class="container">
+
+    <!-- WELCOME -->
+    <section class="welcome">
+
+      <h1>
+        Welcome back, <span id="welcomeName">Student</span> 👋
+      </h1>
+
+      <p>
+        Continue your digital marketing learning journey.
+        Complete lessons, build your skills and earn certificates.
+      </p>
+
+    </section>
+
+
+    <!-- STATS -->
+    <section class="stats">
+
+      <div class="stat-card">
+        <h3 id="totalCourses">5</h3>
+        <p>Total Courses</p>
+      </div>
+
+      <div class="stat-card">
+        <h3 id="completedCourses">0</h3>
+        <p>Completed Courses</p>
+      </div>
+
+      <div class="stat-card">
+        <h3 id="completedLessons">0</h3>
+        <p>Completed Lessons</p>
+      </div>
+
+      <div class="stat-card">
+        <h3 id="overallProgress">0%</h3>
+        <p>Overall Progress</p>
+      </div>
+
+    </section>
+
+
+    <!-- OVERALL PROGRESS -->
+    <section class="overall">
+
+      <div class="overall-top">
+
+        <h2>
+          Overall Learning Progress
+        </h2>
+
+        <span
+          class="overall-percent"
+          id="overallPercent">
+          0%
+        </span>
+
+      </div>
+
+      <div class="progress-bg">
+
+        <div
+          class="progress-fill"
+          id="overallProgressBar">
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- COURSES -->
+    <h2 class="section-title">
+      My Courses
+    </h2>
+
+    <section
+      class="courses"
+      id="coursesContainer">
+
+      <div class="loading">
+        Loading courses...
+      </div>
+
+    </section>
+
+
+    <!-- PROFILE -->
+    <section class="profile">
+
+      <h2>
+        My Profile
+      </h2>
+
+      <div class="profile-row">
+
+        <span class="profile-label">
+          Name
+        </span>
+
+        <span
+          class="profile-value"
+          id="profileName">
+          -
+        </span>
+
+      </div>
+
+      <div class="profile-row">
+
+        <span class="profile-label">
+          Email
+        </span>
+
+        <span
+          class="profile-value"
+          id="profileEmail">
+          -
+        </span>
+
+      </div>
+
+      <div class="profile-row">
+
+        <span class="profile-label">
+          Account Type
+        </span>
+
+        <span
+          class="profile-value"
+          id="profileRole">
+          Student
+        </span>
+
+      </div>
+
+    </section>
+
+
+    <!-- CERTIFICATE -->
+    <section class="certificate">
+
+      <h2>
+        🎓 Course Certificates
+      </h2>
+
+      <p id="certificateMessage">
+        Complete a course to unlock your certificate.
+      </p>
+
+      <button
+        id="certificateBtn"
+        onclick="openCertificate()"
+        disabled>
+        View Certificate
+      </button>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+
+    © 2026 DigitalLearn |
+    Digital Marketing Training Platform
+
+  </footer>
+
+
+  <script>
+
+    // ==========================================
+    // COURSE DATA
+    // ==========================================
+
+    const courses = [
+
+      {
+        name: "Digital Marketing Basics",
+        icon: "📚",
+        description:
+          "Learn the fundamentals of digital marketing, online branding, content and marketing strategy."
+      },
+
+      {
+        name: "Social Media Marketing",
+        icon: "📱",
+        description:
+          "Learn how to use social media platforms to build audiences, engagement and brand awareness."
+      },
+
+      {
+        name: "Search Engine Optimization",
+        icon: "🔎",
+        description:
+          "Understand SEO fundamentals, keywords, content optimization and search visibility."
+      },
+
+      {
+        name: "Content Marketing",
+        icon: "✍️",
+        description:
+          "Learn how to create valuable content that attracts, engages and retains customers."
+      },
+
+      {
+        name: "Google Ads",
+        icon: "📈",
+        description:
+          "Understand digital advertising, campaign planning, targeting and performance measurement."
+      }
+
+    ];
+
+
+    // ==========================================
+    // USER EMAIL
+    // ==========================================
+
+    const userEmail =
+      localStorage.getItem("userEmail");
+
+
+    // ==========================================
+    // LOAD DASHBOARD
+    // ==========================================
+
+    async function loadDashboard() {
+
+      if (!userEmail) {
+
+        alert(
+          "Please login first."
+        );
+
+        window.location.href =
+          "login.html";
+
+        return;
+
+      }
+
+
+      try {
+
+        const response =
+          await fetch(
+            `http://localhost:5000/api/user/${encodeURIComponent(userEmail)}`
+          );
+
+
+        const data =
+          await response.json();
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            data.message || "Unable to load profile"
+          );
+
+        }
+
+
+        const user =
+          data.user;
+
+
+        // ======================================
+        // USER INFORMATION
+        // ======================================
+
+        document.getElementById(
+          "welcomeName"
+        ).textContent =
+          user.name;
+
+
+        document.getElementById(
+          "headerUserName"
+        ).textContent =
+          user.name;
+
+
+        document.getElementById(
+          "profileName"
+        ).textContent =
+          user.name;
+
+
+        document.getElementById(
+          "profileEmail"
+        ).textContent =
+          user.email;
+
+
+        document.getElementById(
+          "profileRole"
+        ).textContent =
+          user.role || "Student";
+
+
+        // ======================================
+        // COURSE PROGRESS
+        // ======================================
+
+        const courseProgress =
+          user.courseProgress || {};
+
+
+        renderCourses(courseProgress);
+
+
+        // ======================================
+        // CALCULATE OVERALL
+        // ======================================
+
+        let totalProgress = 0;
+
+        let completedCourseCount = 0;
+
+        let totalCompletedLessons = 0;
+
+
+        courses.forEach(course => {
+
+          const saved =
+            courseProgress[course.name];
+
+
+          const progress =
+            saved
+              ? Number(saved.progress || 0)
+              : 0;
+
+
+          totalProgress += progress;
+
+
+          if (progress >= 100) {
+            completedCourseCount++;
+          }
+
+
+          if (
+            saved &&
+            Array.isArray(saved.completedLessons)
+          ) {
+
+            totalCompletedLessons +=
+              saved.completedLessons.length;
+
+          }
+
+        });
+
+
+        const overall =
+          Math.round(
+            totalProgress / courses.length
+          );
+
+
+        // ======================================
+        // UPDATE STATS
+        // ======================================
+
+        document.getElementById(
+          "completedCourses"
+        ).textContent =
+          completedCourseCount;
+
+
+        document.getElementById(
+          "completedLessons"
+        ).textContent =
+          totalCompletedLessons;
+
+
+        document.getElementById(
+          "overallProgress"
+        ).textContent =
+          `${overall}%`;
+
+
+        document.getElementById(
+          "overallPercent"
+        ).textContent =
+          `${overall}%`;
+
+
+        document.getElementById(
+          "overallProgressBar"
+        ).style.width =
+          `${overall}%`;
+
+
+        // ======================================
+        // CERTIFICATE
+        // ======================================
+
+        const certificateBtn =
+          document.getElementById(
+            "certificateBtn"
+          );
+
+
+        if (completedCourseCount > 0) {
+
+          const firstCompletedCourse =
+            courses.find(course => {
+              const saved = courseProgress[course.name];
+              return saved &&
+                Number(saved.progress || 0) >= 100;
+            });
+
+          certificateBtn.disabled = false;
+
+          certificateBtn.onclick = function () {
+            openCertificate(firstCompletedCourse.name);
+          };
+
+          document.getElementById(
+            "certificateMessage"
+          ).textContent =
+            `${completedCourseCount} course certificate(s) unlocked.`;
+
+        } else {
+
+          certificateBtn.disabled = true;
+
+          certificateBtn.onclick = null;
+
+          document.getElementById(
+            "certificateMessage"
+          ).textContent =
+            "Complete a course to unlock your certificate.";
+
+        }
+
+
+      } catch (error) {
+
+        console.error(
+          "Dashboard error:",
+          error
+        );
+
+
+        document.getElementById(
+          "coursesContainer"
+        ).innerHTML = `
+
+          <div class="loading">
+
+            Unable to load dashboard.
+
+            <br><br>
+
+            Make sure the backend server is running.
+
+          </div>
+
+        `;
+
+      }
+
+    }
+
+
+    // ==========================================
+    // RENDER COURSES
+    // ==========================================
+
+    function renderCourses(courseProgress) {
+
+      const container =
+        document.getElementById(
+          "coursesContainer"
+        );
+
+
+      container.innerHTML = "";
+
+
+      courses.forEach(course => {
+
+        const saved =
+          courseProgress[course.name];
+
+
+        const progress =
+          saved
+            ? Number(saved.progress || 0)
+            : 0;
+
+
+        const completedLessons =
+          saved &&
+          Array.isArray(saved.completedLessons)
+            ? saved.completedLessons.length
+            : 0;
+
+
+        const lastLesson =
+          saved &&
+          saved.lastLesson !== undefined
+            ? Number(saved.lastLesson)
+            : 0;
+
+
+        const card =
+          document.createElement("div");
+
+
+        card.className =
+          "course-card";
+
+
+        let statusText =
+          `${completedLessons} / 10 lessons completed`;
+
+
+        if (progress >= 100) {
+
+          statusText =
+            `<span class="completed-badge">
+              ✓ Course Completed
+            </span>`;
+
+        }
+
+
+        card.innerHTML = `
+
+          <div class="course-icon">
+            ${course.icon}
+          </div>
+
+          <h3>
+            ${course.name}
+          </h3>
+
+          <p>
+            ${course.description}
+          </p>
+
+          <div class="course-progress-top">
+
+            <span>
+              Progress
+            </span>
+
+            <span>
+              ${progress}%
+            </span>
+
+          </div>
+
+          <div class="course-progress-bg">
+
+            <div
+              class="course-progress-fill"
+              style="width:${progress}%">
+            </div>
+
+          </div>
+
+          <div class="course-footer">
+
+            <span class="lesson-status">
+              ${statusText}
+            </span>
+
+            <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
+
+              <button
+                class="course-btn"
+                onclick='startCourse(${JSON.stringify(course.name)})'>
+                ${progress > 0 ? "Continue" : "Start Course"}
+              </button>
+
+              ${
+                progress >= 100
+                  ? `
+                    <button
+                      class="course-btn"
+                      style="background:#7c3aed;"
+                      onclick='openCertificate(${JSON.stringify(course.name)})'>
+                      🎓 Certificate
+                    </button>
+                  `
+                  : ""
+              }
+
+            </div>
+
+          </div>
+
+        `;
+
+
+        container.appendChild(card);
+
+      });
+
+    }
+
+
+    // ==========================================
+    // START / CONTINUE COURSE
+    // ==========================================
+
+    function startCourse(courseName) {
+
+      localStorage.setItem(
+        "selectedCourse",
+        courseName
+      );
+
+
+      window.location.href =
+        "course.html";
+
+    }
+
+
+    // ==========================================
+    // LOGOUT
+    // ==========================================
+
+    function logout() {
+
+      localStorage.removeItem(
+        "userEmail"
+      );
+
+      localStorage.removeItem(
+        "token"
+      );
+
+      localStorage.removeItem(
+        "user"
+      );
+
+      localStorage.removeItem(
+        "selectedCourse"
+      );
+
+
+      window.location.href =
+        "login.html";
+
+    }
+
+
+    // ==========================================
+    // CERTIFICATE
+    // ==========================================
+
+    function openCertificate(courseName) {
+
+      if (!courseName) {
+        alert("Please select a completed course.");
+        return;
+      }
+
+      localStorage.setItem(
+        "selectedCourse",
+        courseName
+      );
+
+      window.location.href =
+        "certificate.html";
+    }
+
+
+    // ==========================================
+    // START
+    // ==========================================
+
+    loadDashboard();
+
+  </script>
+
+</body>
+</html>

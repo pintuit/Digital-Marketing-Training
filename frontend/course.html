@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Course Learning | DigitalLearn</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #1f2937;
+    }
+
+    /* HEADER */
+    header {
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      color: white;
+      padding: 18px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .back-btn {
+      border: none;
+      background: rgba(255,255,255,0.18);
+      color: white;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .back-btn:hover {
+      background: rgba(255,255,255,0.28);
+    }
+
+    /* MAIN */
+    .container {
+      width: 92%;
+      max-width: 1250px;
+      margin: 30px auto;
+    }
+
+    .course-header {
+      background: white;
+      padding: 30px;
+      border-radius: 18px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+      margin-bottom: 25px;
+    }
+
+    .course-header h1 {
+      font-size: 32px;
+      margin-bottom: 15px;
+      color: #111827;
+    }
+
+    .course-header p {
+      color: #6b7280;
+      margin-bottom: 20px;
+    }
+
+    .progress-container {
+      background: #e5e7eb;
+      height: 14px;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #2563eb, #7c3aed);
+      transition: width 0.4s ease;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    /* LMS GRID */
+    .course-layout {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 25px;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+      height: fit-content;
+    }
+
+    .sidebar h3 {
+      margin-bottom: 15px;
+    }
+
+    .lesson-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .lesson-item {
+      padding: 12px;
+      border-radius: 9px;
+      background: #f3f4f6;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.2s;
+    }
+
+    .lesson-item:hover {
+      background: #e5e7eb;
+    }
+
+    .lesson-item.active {
+      background: #2563eb;
+      color: white;
+    }
+
+    .lesson-item.completed {
+      border-left: 4px solid #16a34a;
+    }
+
+    /* CONTENT */
+    .content {
+      background: white;
+      border-radius: 18px;
+      padding: 35px;
+      min-height: 500px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+    }
+
+    .lesson-number {
+      color: #2563eb;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .content h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #111827;
+    }
+
+    .lesson-body {
+      line-height: 1.8;
+      color: #4b5563;
+      font-size: 16px;
+    }
+
+    .lesson-body h3 {
+      color: #111827;
+      margin: 22px 0 10px;
+    }
+
+    .lesson-body ul {
+      margin: 10px 0 15px 25px;
+    }
+
+    .lesson-body li {
+      margin-bottom: 8px;
+    }
+
+    /* ACTIONS */
+    .actions {
+      margin-top: 35px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .action-btn {
+      border: none;
+      padding: 12px 20px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .previous {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    .next {
+      background: #2563eb;
+      color: white;
+    }
+
+    .complete {
+      background: #16a34a;
+      color: white;
+    }
+
+    .action-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    /* CERTIFICATE */
+    .certificate {
+      display: none;
+      margin-top: 25px;
+      padding: 30px;
+      background: linear-gradient(135deg, #ecfdf5, #eff6ff);
+      border: 1px solid #bbf7d0;
+      border-radius: 18px;
+      text-align: center;
+    }
+
+    .certificate h2 {
+      color: #166534;
+      margin-bottom: 10px;
+    }
+
+    .certificate button {
+      margin-top: 15px;
+      border: none;
+      padding: 12px 22px;
+      background: #7c3aed;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 800px) {
+      .course-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .course-header h1 {
+        font-size: 25px;
+      }
+
+      .content {
+        padding: 22px;
+      }
+
+      .actions {
+        flex-wrap: wrap;
+      }
+
+      .action-btn {
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">DigitalLearn</div>
+
+    <button class="back-btn" onclick="goDashboard()">
+      ← Dashboard
+    </button>
+  </header>
+
+
+  <main class="container">
+
+    <!-- COURSE HEADER -->
+    <section class="course-header">
+
+      <h1 id="courseTitle">
+        Digital Marketing Basics
+      </h1>
+
+      <p>
+        Complete the lessons to finish this course and earn your certificate.
+      </p>
+
+      <div class="progress-container">
+        <div
+          class="progress-bar"
+          id="progressBar">
+        </div>
+      </div>
+
+      <div class="progress-info">
+        <span id="progressText">0% Complete</span>
+        <span id="lessonCount">0 / 10 Lessons</span>
+      </div>
+
+    </section>
+
+
+    <!-- LMS -->
+    <section class="course-layout">
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+
+        <h3>Course Lessons</h3>
+
+        <div
+          class="lesson-list"
+          id="lessonList">
+        </div>
+
+      </aside>
+
+
+      <!-- LESSON CONTENT -->
+      <section class="content">
+
+        <div
+          class="lesson-number"
+          id="lessonNumber">
+          Lesson 1
+        </div>
+
+        <h2 id="lessonTitle">
+          Introduction to Digital Marketing
+        </h2>
+
+        <div
+          class="lesson-body"
+          id="lessonBody">
+        </div>
+
+
+        <!-- ACTIONS -->
+        <div class="actions">
+
+          <button
+            class="action-btn previous"
+            id="previousBtn"
+            onclick="previousLesson()">
+            ← Previous
+          </button>
+
+          <button
+            class="action-btn complete"
+            id="completeBtn"
+            onclick="completeCurrentLesson()">
+            Mark as Complete
+          </button>
+
+          <button
+            class="action-btn next"
+            id="nextBtn"
+            onclick="nextLesson()">
+            Next →
+          </button>
+
+        </div>
+
+      </section>
+
+    </section>
+
+
+    <!-- CERTIFICATE -->
+    <section
+      class="certificate"
+      id="certificateSection">
+
+      <h2>🎓 Congratulations!</h2>
+
+      <p>
+        You have successfully completed this course.
+      </p>
+
+      <button onclick="openCertificate()">
+        View Certificate
+      </button>
+
+    </section>
+
+  </main>
+
+
+  <script>
+
+    // ==========================================
+    // SELECTED COURSE
+    // ==========================================
+
+    const selectedCourse =
+      localStorage.getItem("selectedCourse")
+      || "Digital Marketing Basics";
+
+
+    document.getElementById("courseTitle").textContent =
+      selectedCourse;
+
+
+    // ==========================================
+    // LESSONS
+    // ==========================================
+
+    const lessons = [
+
+      {
+        title: "Introduction to Digital Marketing",
+
+        body: `
+          <p>
+            Digital marketing is the process of promoting products,
+            services or brands using digital channels such as websites,
+            search engines, social media, email and online advertising.
+          </p>
+
+          <h3>Why Digital Marketing Matters</h3>
+
+          <ul>
+            <li>Helps businesses reach a larger audience.</li>
+            <li>Allows businesses to target specific customers.</li>
+            <li>Provides measurable marketing results.</li>
+            <li>Can be more cost-effective than traditional marketing.</li>
+          </ul>
+
+          <h3>Key Digital Channels</h3>
+
+          <ul>
+            <li>Social Media Marketing</li>
+            <li>Search Engine Optimization</li>
+            <li>Content Marketing</li>
+            <li>Email Marketing</li>
+            <li>Digital Advertising</li>
+          </ul>
+        `
+      },
+
+
+      {
+        title: "Digital Marketing Channels",
+
+        body: `
+          <p>
+            Digital marketing uses multiple online channels to connect
+            businesses with potential customers.
+          </p>
+
+          <h3>Major Channels</h3>
+
+          <ul>
+            <li>Search engines</li>
+            <li>Social media platforms</li>
+            <li>Email</li>
+            <li>Websites and blogs</li>
+            <li>Online advertising</li>
+          </ul>
+
+          <p>
+            Selecting the correct channel depends on the target audience,
+            business goals and available resources.
+          </p>
+        `
+      },
+
+
+      {
+        title: "Understanding Your Target Audience",
+
+        body: `
+          <p>
+            A target audience is the specific group of people that a
+            business wants to reach with its products or services.
+          </p>
+
+          <h3>Audience Research</h3>
+
+          <ul>
+            <li>Age</li>
+            <li>Location</li>
+            <li>Interests</li>
+            <li>Buying behaviour</li>
+            <li>Problems and needs</li>
+          </ul>
+
+          <p>
+            Understanding customers helps marketers create more relevant
+            content and campaigns.
+          </p>
+        `
+      },
+
+
+      {
+        title: "Online Branding",
+
+        body: `
+          <p>
+            Online branding is the process of creating a consistent
+            identity for a business across digital platforms.
+          </p>
+
+          <h3>Important Branding Elements</h3>
+
+          <ul>
+            <li>Logo</li>
+            <li>Brand colours</li>
+            <li>Typography</li>
+            <li>Brand voice</li>
+            <li>Visual content</li>
+          </ul>
+        `
+      },
+
+
+      {
+        title: "Social Media Marketing",
+
+        body: `
+          <p>
+            Social media marketing uses platforms such as Instagram,
+            Facebook, YouTube and LinkedIn to promote brands and
+            communicate with audiences.
+          </p>
+
+          <h3>Common Activities</h3>
+
+          <ul>
+            <li>Creating social media posts</li>
+            <li>Publishing short videos</li>
+            <li>Community engagement</li>
+            <li>Influencer marketing</li>
+            <li>Social media advertising</li>
+          </ul>
+        `
+      },
+
+
+      {
+        title: "Content Marketing",
+
+        body: `
+          <p>
+            Content marketing focuses on creating useful and valuable
+            content to attract and retain a target audience.
+          </p>
+
+          <h3>Examples</h3>
+
+          <ul>
+            <li>Blog articles</li>
+            <li>Videos</li>
+            <li>Infographics</li>
+            <li>Social media content</li>
+            <li>Guides and tutorials</li>
+          </ul>
+
+          <p>
+            Good content should provide value instead of only promoting
+            a product.
+          </p>
+        `
+      },
+
+
+      {
+        title: "Search Engine Optimization",
+
+        body: `
+          <p>
+            Search Engine Optimization, or SEO, is the process of improving
+            a website so that it can appear more prominently in search
+            engine results.
+          </p>
+
+          <h3>Basic SEO Areas</h3>
+
+          <ul>
+            <li>Keywords</li>
+            <li>Useful content</li>
+            <li>Page titles</li>
+            <li>Meta descriptions</li>
+            <li>Website performance</li>
+          </ul>
+        `
+      },
+
+
+      {
+        title: "Email Marketing",
+
+        body: `
+          <p>
+            Email marketing allows businesses to communicate directly
+            with customers through email campaigns.
+          </p>
+
+          <h3>Examples</h3>
+
+          <ul>
+            <li>Newsletters</li>
+            <li>Product announcements</li>
+            <li>Special offers</li>
+            <li>Welcome emails</li>
+            <li>Customer updates</li>
+          </ul>
+        `
+      },
+
+
+      {
+        title: "Digital Advertising",
+
+        body: `
+          <p>
+            Digital advertising involves paying to display advertisements
+            on websites, search engines, social media and other digital
+            platforms.
+          </p>
+
+          <h3>Common Advertising Types</h3>
+
+          <ul>
+            <li>Search advertising</li>
+            <li>Display advertising</li>
+            <li>Social media advertising</li>
+            <li>Video advertising</li>
+            <li>Remarketing</li>
+          </ul>
+        `
+      },
+
+
+      {
+        title: "Digital Marketing Strategy",
+
+        body: `
+          <p>
+            A digital marketing strategy is a structured plan that
+            explains how a business will use digital channels to achieve
+            its marketing objectives.
+          </p>
+
+          <h3>Basic Strategy Process</h3>
+
+          <ul>
+            <li>Define business objectives.</li>
+            <li>Identify the target audience.</li>
+            <li>Select suitable digital channels.</li>
+            <li>Create valuable content.</li>
+            <li>Launch campaigns.</li>
+            <li>Measure results.</li>
+            <li>Improve the strategy.</li>
+          </ul>
+        `
+      }
+
+    ];
+
+
+    // ==========================================
+    // VARIABLES
+    // ==========================================
+
+    let currentLesson = 0;
+
+    let completedLessons = [];
+
+
+    // ==========================================
+    // CREATE LESSON LIST
+    // ==========================================
+
+    function createLessonList() {
+
+      const list =
+        document.getElementById("lessonList");
+
+      list.innerHTML = "";
+
+      lessons.forEach((lesson, index) => {
+
+        const item =
+          document.createElement("div");
+
+        item.className = "lesson-item";
+
+        item.id = `lesson-${index}`;
+
+        item.textContent =
+          `${index + 1}. ${lesson.title}`;
+
+        item.onclick = () => {
+          showLesson(index);
+        };
+
+        list.appendChild(item);
+
+      });
+
+    }
+
+
+    // ==========================================
+    // SHOW LESSON
+    // ==========================================
+
+    function showLesson(index) {
+
+      if (index < 0 || index >= lessons.length) {
+        return;
+      }
+
+      currentLesson = index;
+
+      const lesson = lessons[index];
+
+
+      document.getElementById("lessonNumber").textContent =
+        `Lesson ${index + 1}`;
+
+      document.getElementById("lessonTitle").textContent =
+        lesson.title;
+
+      document.getElementById("lessonBody").innerHTML =
+        lesson.body;
+
+
+      updateLessonList();
+
+      updateCompleteButton();
+
+      updateButtons();
+
+    }
+
+
+    // ==========================================
+    // UPDATE LESSON LIST
+    // ==========================================
+
+    function updateLessonList() {
+
+      lessons.forEach((lesson, index) => {
+
+        const item =
+          document.getElementById(`lesson-${index}`);
+
+        if (!item) return;
+
+
+        item.classList.remove("active");
+        item.classList.remove("completed");
+
+
+        if (index === currentLesson) {
+          item.classList.add("active");
+        }
+
+
+        if (completedLessons.includes(index)) {
+          item.classList.add("completed");
+
+          item.textContent =
+            `✓ ${index + 1}. ${lesson.title}`;
+        } else {
+
+          item.textContent =
+            `${index + 1}. ${lesson.title}`;
+        }
+
+      });
+
+    }
+
+
+    // ==========================================
+    // COMPLETE LESSON
+    // ==========================================
+
+    async function completeCurrentLesson() {
+
+      if (!completedLessons.includes(currentLesson)) {
+
+        completedLessons.push(currentLesson);
+
+        completedLessons.sort((a, b) => a - b);
+
+      }
+
+
+      updateProgress();
+
+      updateCompleteButton();
+
+      updateLessonList();
+
+      await saveProgress();
+
+
+      // Automatically move to next lesson
+      if (currentLesson < lessons.length - 1) {
+
+        setTimeout(() => {
+
+          showLesson(currentLesson + 1);
+
+        }, 300);
+
+      }
+
+    }
+
+
+    // ==========================================
+    // COMPLETE BUTTON
+    // ==========================================
+
+    function updateCompleteButton() {
+
+      const button =
+        document.getElementById("completeBtn");
+
+
+      if (completedLessons.includes(currentLesson)) {
+
+        button.textContent = "✓ Completed";
+
+        button.disabled = true;
+
+      } else {
+
+        button.textContent = "Mark as Complete";
+
+        button.disabled = false;
+
+      }
+
+    }
+
+
+    // ==========================================
+    // UPDATE PROGRESS
+    // ==========================================
+
+    function updateProgress() {
+
+      const progress =
+        Math.round(
+          (completedLessons.length / lessons.length) * 100
+        );
+
+
+      document.getElementById("progressBar").style.width =
+        `${progress}%`;
+
+
+      document.getElementById("progressText").textContent =
+        `${progress}% Complete`;
+
+
+      document.getElementById("lessonCount").textContent =
+        `${completedLessons.length} / ${lessons.length} Lessons`;
+
+
+      // Certificate
+      const certificate =
+        document.getElementById("certificateSection");
+
+
+      if (progress === 100) {
+
+        certificate.style.display = "block";
+
+      } else {
+
+        certificate.style.display = "none";
+
+      }
+
+    }
+
+
+    // ==========================================
+    // SAVE COURSE PROGRESS
+    // ==========================================
+
+    async function saveProgress() {
+
+      const email =
+        localStorage.getItem("userEmail");
+
+
+      if (!email) {
+
+        console.log("User email not found.");
+
+        return;
+
+      }
+
+
+      const progress =
+        Math.round(
+          (completedLessons.length / lessons.length) * 100
+        );
+
+
+      try {
+
+        const response =
+          await fetch("http://localhost:5000/api/progress", {
+
+            method: "PUT",
+
+            headers: {
+              "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+
+              email: email,
+
+              course: selectedCourse,
+
+              progress: progress,
+
+              completedLessons: completedLessons,
+
+              lastLesson: currentLesson
+
+            })
+
+          });
+
+
+        const data =
+          await response.json();
+
+
+        if (!response.ok) {
+
+          console.error(
+            "Progress save failed:",
+            data.message
+          );
+
+          return;
+
+        }
+
+
+        console.log(
+          "Course progress saved:",
+          data
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "Progress save error:",
+          error
+        );
+
+      }
+
+    }
+
+
+    // ==========================================
+    // LOAD COURSE PROGRESS
+    // ==========================================
+
+    async function loadProgress() {
+
+      const email =
+        localStorage.getItem("userEmail");
+
+
+      if (!email) {
+
+        console.log(
+          "User email not found."
+        );
+
+        return;
+
+      }
+
+
+      try {
+
+        const response =
+          await fetch(
+            `http://localhost:5000/api/user/${encodeURIComponent(email)}`
+          );
+
+
+        const data =
+          await response.json();
+
+
+        if (!response.ok) {
+
+          console.error(
+            "Profile loading failed:",
+            data.message
+          );
+
+          return;
+
+        }
+
+
+        const courseProgress =
+          data.user.courseProgress;
+
+
+        if (!courseProgress) {
+
+          return;
+
+        }
+
+
+        let savedCourse;
+
+
+        // Mongoose Map normally becomes an object
+        if (
+          typeof courseProgress === "object" &&
+          !Array.isArray(courseProgress)
+        ) {
+
+          savedCourse =
+            courseProgress[selectedCourse];
+
+        }
+
+
+        if (!savedCourse) {
+
+          console.log(
+            "No progress found for this course."
+          );
+
+          updateProgress();
+
+          return;
+
+        }
+
+
+        completedLessons =
+          Array.isArray(savedCourse.completedLessons)
+            ? savedCourse.completedLessons.map(Number)
+            : [];
+
+
+        if (
+          savedCourse.lastLesson !== undefined
+        ) {
+
+          currentLesson =
+            Number(savedCourse.lastLesson);
+
+        }
+
+
+        if (
+          currentLesson < 0 ||
+          currentLesson >= lessons.length
+        ) {
+
+          currentLesson = 0;
+
+        }
+
+
+        updateProgress();
+
+        showLesson(currentLesson);
+
+
+        console.log(
+          "Course progress loaded:",
+          selectedCourse,
+          savedCourse
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "Progress loading error:",
+          error
+        );
+
+      }
+
+    }
+
+
+    // ==========================================
+    // PREVIOUS
+    // ==========================================
+
+    function previousLesson() {
+
+      if (currentLesson > 0) {
+
+        showLesson(
+          currentLesson - 1
+        );
+
+      }
+
+    }
+
+
+    // ==========================================
+    // NEXT
+    // ==========================================
+
+    function nextLesson() {
+
+      if (currentLesson < lessons.length - 1) {
+
+        showLesson(
+          currentLesson + 1
+        );
+
+      }
+
+    }
+
+
+    // ==========================================
+    // UPDATE BUTTONS
+    // ==========================================
+
+    function updateButtons() {
+
+      document.getElementById("previousBtn").disabled =
+        currentLesson === 0;
+
+
+      document.getElementById("nextBtn").disabled =
+        currentLesson === lessons.length - 1;
+
+    }
+
+
+    // ==========================================
+    // DASHBOARD
+    // ==========================================
+
+    function goDashboard() {
+
+      window.location.href =
+        "dashboard.html";
+
+    }
+
+
+    // ==========================================
+    // CERTIFICATE
+    // ==========================================
+
+    function openCertificate() {
+
+  window.location.href = "certificate.html";
+
+}
+
+
+    // ==========================================
+    // INITIALIZE
+    // ==========================================
+
+    createLessonList();
+
+    showLesson(0);
+
+    loadProgress();
+
+  </script>
+
+</body>
+</html>

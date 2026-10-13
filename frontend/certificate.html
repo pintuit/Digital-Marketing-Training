@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Certificate | DigitalLearn</title>
+
+
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef2f7;
+      min-height: 100vh;
+      padding: 30px;
+      color: #1f2937;
+    }
+
+
+    /* ===============================
+       TOP BAR
+    =============================== */
+
+    .top-bar {
+      max-width: 1100px;
+      margin: auto;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      margin-bottom: 25px;
+    }
+
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+
+    button {
+      border: none;
+      padding: 11px 18px;
+      border-radius: 8px;
+
+      cursor: pointer;
+
+      font-weight: bold;
+
+      transition: 0.2s;
+    }
+
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+
+    .back-btn {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+
+    .back-btn:hover {
+      background: #d1d5db;
+    }
+
+
+    .print-btn {
+      background: #2563eb;
+      color: white;
+    }
+
+
+    .print-btn:hover {
+      background: #1d4ed8;
+    }
+
+
+    .verify-btn {
+      background: #059669;
+      color: white;
+    }
+
+
+    .verify-btn:hover {
+      background: #047857;
+    }
+
+
+    /* ===============================
+       CERTIFICATE WRAPPER
+    =============================== */
+
+    .certificate-wrapper {
+      max-width: 1050px;
+      margin: auto;
+
+      background: white;
+
+      padding: 25px;
+
+      box-shadow:
+        0 10px 35px
+        rgba(0, 0, 0, 0.12);
+    }
+
+
+    .certificate {
+      border: 12px solid #1d4ed8;
+
+      min-height: 650px;
+
+      padding: 50px;
+
+      text-align: center;
+
+      position: relative;
+
+      background: white;
+    }
+
+
+    .certificate::before {
+      content: "";
+
+      position: absolute;
+
+      inset: 12px;
+
+      border: 2px solid #d4af37;
+
+      pointer-events: none;
+    }
+
+
+    /* ===============================
+       CERTIFICATE CONTENT
+    =============================== */
+
+    .brand {
+      font-size: 22px;
+
+      font-weight: bold;
+
+      color: #2563eb;
+
+      letter-spacing: 2px;
+
+      margin-bottom: 25px;
+    }
+
+
+    .certificate-title {
+      font-size: 48px;
+
+      color: #111827;
+
+      letter-spacing: 4px;
+
+      margin-bottom: 15px;
+    }
+
+
+    .subtitle {
+      color: #6b7280;
+
+      font-size: 18px;
+
+      margin-bottom: 35px;
+    }
+
+
+    .presented {
+      color: #6b7280;
+
+      font-size: 16px;
+
+      margin-bottom: 12px;
+    }
+
+
+    .student-name {
+      font-size: 38px;
+
+      font-weight: bold;
+
+      color: #1d4ed8;
+
+      border-bottom: 2px solid #d4af37;
+
+      display: inline-block;
+
+      padding: 0 35px 10px;
+
+      margin-bottom: 25px;
+    }
+
+
+    .completion-text {
+      font-size: 17px;
+
+      color: #4b5563;
+
+      margin-bottom: 15px;
+    }
+
+
+    .course-name {
+      font-size: 30px;
+
+      font-weight: bold;
+
+      color: #111827;
+
+      margin-bottom: 30px;
+    }
+
+
+    .certificate-description {
+      max-width: 700px;
+
+      margin: auto;
+
+      line-height: 1.7;
+
+      color: #6b7280;
+
+      font-size: 15px;
+    }
+
+
+    /* ===============================
+       BOTTOM INFORMATION
+    =============================== */
+
+    .certificate-bottom {
+      margin-top: 55px;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: end;
+
+      padding: 0 50px;
+    }
+
+
+    .signature {
+      min-width: 180px;
+    }
+
+
+    .signature-line {
+      border-top: 1px solid #374151;
+
+      padding-top: 8px;
+
+      font-size: 13px;
+
+      color: #6b7280;
+    }
+
+
+    .certificate-id {
+      font-size: 12px;
+
+      color: #6b7280;
+
+      line-height: 1.6;
+    }
+
+
+    .status {
+      margin-top: 18px;
+
+      font-weight: bold;
+
+      color: #15803d;
+    }
+
+
+    /* ===============================
+       PRINT
+    =============================== */
+
+    @media print {
+
+      body {
+        background: white;
+
+        padding: 0;
+      }
+
+
+      .top-bar {
+        display: none;
+      }
+
+
+      .certificate-wrapper {
+        box-shadow: none;
+
+        padding: 0;
+
+        max-width: none;
+      }
+
+
+      .certificate {
+        min-height: 100vh;
+      }
+
+    }
+
+
+    /* ===============================
+       MOBILE
+    =============================== */
+
+    @media (max-width: 700px) {
+
+      body {
+        padding: 10px;
+      }
+
+
+      .top-bar {
+        flex-direction: column;
+
+        gap: 15px;
+
+        align-items: stretch;
+      }
+
+
+      .logo {
+        text-align: center;
+      }
+
+
+      .buttons {
+        justify-content: center;
+      }
+
+
+      .certificate {
+        padding: 35px 20px;
+
+        border-width: 7px;
+      }
+
+
+      .certificate-title {
+        font-size: 32px;
+      }
+
+
+      .student-name {
+        font-size: 27px;
+
+        padding: 0 15px 8px;
+      }
+
+
+      .course-name {
+        font-size: 22px;
+      }
+
+
+      .certificate-bottom {
+        padding: 0;
+
+        gap: 20px;
+
+        flex-direction: column;
+
+        align-items: center;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- ===============================
+       TOP BAR
+  =============================== -->
+
+  <div class="top-bar">
+
+
+    <div class="logo">
+      DigitalLearn
+    </div>
+
+
+    <div class="buttons">
+
+
+      <!-- Dashboard -->
+
+      <button
+        class="back-btn"
+        onclick="goDashboard()">
+
+        ← Dashboard
+
+      </button>
+
+
+      <!-- Print -->
+
+      <button
+        class="print-btn"
+        onclick="window.print()">
+
+        🖨 Print Certificate
+
+      </button>
+
+
+      <!-- Verify -->
+
+      <button
+        class="verify-btn"
+        onclick="verifyCertificate()">
+
+        🔎 Verify Certificate
+
+      </button>
+
+
+    </div>
+
+  </div>
+
+
+
+  <!-- ===============================
+       CERTIFICATE
+  =============================== -->
+
+  <div class="certificate-wrapper">
+
+
+    <div class="certificate">
+
+
+      <div class="brand">
+        DIGITALLEARN
+      </div>
+
+
+      <div class="certificate-title">
+        CERTIFICATE
+      </div>
+
+
+      <div class="subtitle">
+        OF COMPLETION
+      </div>
+
+
+      <div class="presented">
+        This certificate is proudly presented to
+      </div>
+
+
+      <div
+        class="student-name"
+        id="studentName">
+
+        Loading...
+
+      </div>
+
+
+      <div class="completion-text">
+        for successfully completing the course
+      </div>
+
+
+      <div
+        class="course-name"
+        id="courseName">
+
+        Loading...
+
+      </div>
+
+
+      <p class="certificate-description">
+
+        This certificate recognizes the successful
+        completion of the DigitalLearn digital marketing
+        training program. The learner has completed all
+        required lessons and demonstrated commitment to
+        developing practical digital marketing knowledge
+        and skills.
+
+      </p>
+
+
+
+      <!-- ===============================
+           CERTIFICATE BOTTOM
+      =============================== -->
+
+      <div class="certificate-bottom">
+
+
+        <!-- Signature 1 -->
+
+        <div class="signature">
+
+          <div class="signature-line">
+            DigitalLearn Training
+          </div>
+
+        </div>
+
+
+
+        <!-- Certificate Information -->
+
+        <div class="certificate-id">
+
+          Certificate ID:
+
+          <strong id="certificateId">
+            Loading...
+          </strong>
+
+
+          <br>
+
+
+          Issued:
+
+          <span id="completionDate">
+            Loading...
+          </span>
+
+
+          <div
+            class="status"
+            id="certificateStatus">
+
+            ✓ VERIFIED
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Signature 2 -->
+
+        <div class="signature">
+
+          <div class="signature-line">
+            Program Director
+          </div>
+
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+
+  <!-- ===============================
+       JAVASCRIPT
+  =============================== -->
+
+  <script>
+
+
+    const userEmail =
+      localStorage.getItem(
+        "userEmail"
+      );
+
+
+    const selectedCourse =
+      localStorage.getItem(
+        "selectedCourse"
+      );
+
+
+
+    /* ===============================
+       DASHBOARD
+    =============================== */
+
+    function goDashboard() {
+
+      window.location.href =
+        "dashboard.html";
+
+    }
+
+
+
+    /* ===============================
+       VERIFY CERTIFICATE
+    =============================== */
+
+    function verifyCertificate() {
+
+      const certificateElement =
+        document.getElementById(
+          "certificateId"
+        );
+
+
+      const certificateId =
+        certificateElement.textContent.trim();
+
+
+      if (
+        !certificateId ||
+        certificateId === "Loading..."
+      ) {
+
+        alert(
+          "Certificate ID is not available yet."
+        );
+
+        return;
+
+      }
+
+
+      /*
+        Store certificate ID temporarily
+        so verification page can use it.
+      */
+
+      localStorage.setItem(
+        "verifyCertificateId",
+        certificateId
+      );
+
+
+      window.location.href =
+        "verify-certificate.html";
+
+    }
+
+
+
+    /* ===============================
+       LOAD CERTIFICATE
+    =============================== */
+
+    async function loadCertificate() {
+
+
+      // Login check
+
+      if (!userEmail) {
+
+        alert(
+          "Please login first."
+        );
+
+
+        window.location.href =
+          "login.html";
+
+
+        return;
+
+      }
+
+
+
+      // Course check
+
+      if (!selectedCourse) {
+
+        alert(
+          "Please select a course first."
+        );
+
+
+        window.location.href =
+          "dashboard.html";
+
+
+        return;
+
+      }
+
+
+
+      try {
+
+
+        /*
+          Backend certificate request.
+
+          Backend checks:
+
+          1. User exists
+          2. Course exists
+          3. Course is 100% complete
+          4. Existing certificate
+          5. Creates certificate if needed
+        */
+
+
+        const response =
+          await fetch(
+            "http://localhost:5000/api/certificate",
+            {
+
+              method: "POST",
+
+              headers: {
+
+                "Content-Type":
+                  "application/json"
+
+              },
+
+              body:
+                JSON.stringify({
+
+                  email:
+                    userEmail,
+
+                  course:
+                    selectedCourse
+
+                })
+
+            }
+          );
+
+
+
+        const data =
+          await response.json();
+
+
+
+        if (!response.ok) {
+
+          alert(
+            data.message ||
+            "Certificate cannot be generated."
+          );
+
+
+          window.location.href =
+            "course.html";
+
+
+          return;
+
+        }
+
+
+
+        const certificate =
+          data.certificate;
+
+
+
+        /* ===============================
+           STUDENT NAME
+        =============================== */
+
+        document.getElementById(
+          "studentName"
+        ).textContent =
+
+          data.user?.name ||
+          "Student";
+
+
+
+        /* ===============================
+           COURSE NAME
+        =============================== */
+
+        document.getElementById(
+          "courseName"
+        ).textContent =
+
+          certificate.course;
+
+
+
+        /* ===============================
+           CERTIFICATE ID
+        =============================== */
+
+        document.getElementById(
+          "certificateId"
+        ).textContent =
+
+          certificate.certificateId;
+
+
+
+        /* ===============================
+           SAVE CERTIFICATE ID
+        =============================== */
+
+        localStorage.setItem(
+          "verifyCertificateId",
+          certificate.certificateId
+        );
+
+
+
+        /* ===============================
+           ISSUE DATE
+        =============================== */
+
+        const issuedDate =
+          new Date(
+            certificate.issuedAt
+          );
+
+
+        document.getElementById(
+          "completionDate"
+        ).textContent =
+
+          issuedDate.toLocaleDateString(
+            "en-IN",
+            {
+
+              day: "2-digit",
+
+              month: "long",
+
+              year: "numeric"
+
+            }
+          );
+
+
+
+        /* ===============================
+           STATUS
+        =============================== */
+
+        document.getElementById(
+          "certificateStatus"
+        ).textContent =
+
+          certificate.status === "valid"
+
+            ? "✓ VERIFIED"
+
+            : "✕ INVALID";
+
+
+      } catch (error) {
+
+
+        console.error(
+          "Certificate error:",
+          error
+        );
+
+
+        alert(
+          "Unable to connect to certificate server."
+        );
+
+
+        window.location.href =
+          "dashboard.html";
+
+      }
+
+    }
+
+
+
+    /* ===============================
+       START
+    =============================== */
+
+    loadCertificate();
+
+
+  </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Verify Certificate | DigitalLearn</title>
+
+
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+
+    body {
+
+      min-height: 100vh;
+
+      background:
+        linear-gradient(
+          135deg,
+          #eef2ff,
+          #f8fafc
+        );
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding: 30px;
+    }
+
+
+    .container {
+
+      width: 100%;
+
+      max-width: 720px;
+    }
+
+
+    .card {
+
+      background: white;
+
+      border-radius: 22px;
+
+      padding: 40px;
+
+      box-shadow:
+        0 20px 60px
+        rgba(15, 23, 42, 0.12);
+
+      text-align: center;
+    }
+
+
+    .logo {
+
+      font-size: 28px;
+
+      font-weight: 800;
+
+      color: #4f46e5;
+
+      margin-bottom: 8px;
+    }
+
+
+    .platform {
+
+      color: #64748b;
+
+      font-size: 14px;
+
+      margin-bottom: 30px;
+    }
+
+
+    h1 {
+
+      font-size: 32px;
+
+      color: #111827;
+
+      margin-bottom: 10px;
+    }
+
+
+    .description {
+
+      color: #64748b;
+
+      line-height: 1.6;
+
+      margin-bottom: 25px;
+    }
+
+
+    .input-group {
+
+      display: flex;
+
+      gap: 10px;
+
+      margin-top: 20px;
+    }
+
+
+    input {
+
+      flex: 1;
+
+      padding: 15px;
+
+      border: 1px solid #cbd5e1;
+
+      border-radius: 12px;
+
+      font-size: 16px;
+
+      outline: none;
+    }
+
+
+    input:focus {
+
+      border-color: #4f46e5;
+
+      box-shadow:
+        0 0 0 3px
+        rgba(79, 70, 229, 0.1);
+    }
+
+
+    .verify-btn {
+
+      border: none;
+
+      background: #4f46e5;
+
+      color: white;
+
+      padding: 15px 24px;
+
+      border-radius: 12px;
+
+      font-weight: 700;
+
+      cursor: pointer;
+    }
+
+
+    .verify-btn:hover {
+
+      background: #4338ca;
+    }
+
+
+    .result {
+
+      display: none;
+
+      margin-top: 30px;
+
+      padding: 25px;
+
+      border-radius: 16px;
+
+      text-align: left;
+    }
+
+
+    .valid {
+
+      display: block;
+
+      background: #ecfdf5;
+
+      border: 1px solid #86efac;
+    }
+
+
+    .invalid {
+
+      display: block;
+
+      background: #fef2f2;
+
+      border: 1px solid #fecaca;
+
+      text-align: center;
+    }
+
+
+    .verified-title {
+
+      color: #15803d;
+
+      font-size: 24px;
+
+      font-weight: 800;
+
+      text-align: center;
+
+      margin-bottom: 20px;
+    }
+
+
+    .invalid-title {
+
+      color: #dc2626;
+
+      font-size: 24px;
+
+      font-weight: 800;
+
+      margin-bottom: 10px;
+    }
+
+
+    .details {
+
+      display: grid;
+
+      gap: 12px;
+    }
+
+
+    .detail {
+
+      padding: 14px;
+
+      background: white;
+
+      border-radius: 10px;
+
+      border: 1px solid #e2e8f0;
+    }
+
+
+    .label {
+
+      display: block;
+
+      font-size: 11px;
+
+      color: #64748b;
+
+      margin-bottom: 5px;
+
+      text-transform: uppercase;
+
+      font-weight: 700;
+
+      letter-spacing: 0.5px;
+    }
+
+
+    .value {
+
+      color: #111827;
+
+      font-size: 16px;
+
+      font-weight: 600;
+    }
+
+
+    .status {
+
+      color: #15803d;
+
+      font-weight: 800;
+    }
+
+
+    .back-buttons {
+
+      display: flex;
+
+      justify-content: center;
+
+      gap: 10px;
+
+      margin-top: 25px;
+
+      flex-wrap: wrap;
+    }
+
+
+    .back-btn {
+
+      display: inline-block;
+
+      padding: 13px 22px;
+
+      border-radius: 10px;
+
+      background: #111827;
+
+      color: white;
+
+      text-decoration: none;
+
+      font-weight: 700;
+    }
+
+
+    .back-btn:hover {
+
+      background: #000;
+    }
+
+
+    .certificate-btn {
+
+      display: inline-block;
+
+      padding: 13px 22px;
+
+      border-radius: 10px;
+
+      background: #e5e7eb;
+
+      color: #374151;
+
+      text-decoration: none;
+
+      font-weight: 700;
+    }
+
+
+    .hint {
+
+      margin-top: 14px;
+
+      font-size: 13px;
+
+      color: #94a3b8;
+    }
+
+
+    .loading {
+
+      color: #4f46e5;
+
+      font-weight: 700;
+
+      text-align: center;
+    }
+
+
+    @media (max-width: 600px) {
+
+      body {
+
+        padding: 15px;
+      }
+
+
+      .card {
+
+        padding: 25px 20px;
+      }
+
+
+      h1 {
+
+        font-size: 27px;
+      }
+
+
+      .input-group {
+
+        flex-direction: column;
+      }
+
+
+      .verify-btn {
+
+        width: 100%;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <div class="container">
+
+
+    <div class="card">
+
+
+      <!-- LOGO -->
+
+      <div class="logo">
+        DigitalLearn
+      </div>
+
+
+      <div class="platform">
+        Digital Marketing Training Platform
+      </div>
+
+
+      <!-- TITLE -->
+
+      <h1>
+        Verify Certificate
+      </h1>
+
+
+      <p class="description">
+
+        Verify the authenticity of a DigitalLearn
+        course certificate using its unique
+        certificate ID.
+
+      </p>
+
+
+      <!-- INPUT -->
+
+      <div class="input-group">
+
+        <input
+          type="text"
+          id="certificateId"
+          placeholder="Example: DL-PINT-123456"
+          autocomplete="off"
+        >
+
+
+        <button
+          class="verify-btn"
+          onclick="verifyCertificate()">
+
+          Verify
+
+        </button>
+
+      </div>
+
+
+      <p class="hint">
+
+        Certificate ID is displayed on the certificate.
+
+      </p>
+
+
+      <!-- RESULT -->
+
+      <div
+        id="result"
+        class="result">
+      </div>
+
+
+      <!-- BUTTONS -->
+
+      <div class="back-buttons">
+
+        <a
+          href="dashboard.html"
+          class="back-btn">
+
+          ← Dashboard
+
+        </a>
+
+
+        <a
+          href="certificate.html"
+          class="certificate-btn">
+
+          🎓 Certificate
+
+        </a>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+
+  <script>
+
+
+    /* ===============================
+       AUTO LOAD CERTIFICATE ID
+    =============================== */
+
+    const savedCertificateId =
+      localStorage.getItem(
+        "verifyCertificateId"
+      );
+
+
+    if (savedCertificateId) {
+
+      document.getElementById(
+        "certificateId"
+      ).value =
+        savedCertificateId;
+
+    }
+
+
+
+    /* ===============================
+       VERIFY CERTIFICATE
+    =============================== */
+
+    async function verifyCertificate() {
+
+
+      const input =
+        document.getElementById(
+          "certificateId"
+        );
+
+
+      const result =
+        document.getElementById(
+          "result"
+        );
+
+
+      const certificateId =
+        input.value.trim();
+
+
+
+      /* Empty ID */
+
+      if (!certificateId) {
+
+        result.className =
+          "result invalid";
+
+
+        result.innerHTML = `
+
+          <div class="invalid-title">
+            ⚠ Certificate ID Required
+          </div>
+
+          <p>
+            Please enter a certificate ID.
+          </p>
+
+        `;
+
+        return;
+
+      }
+
+
+
+      /* Loading */
+
+      result.className =
+        "result valid";
+
+
+      result.innerHTML = `
+
+        <div class="loading">
+          Verifying certificate...
+        </div>
+
+      `;
+
+
+
+      try {
+
+
+        const response =
+          await fetch(
+
+            "http://localhost:5000/api/certificate/" +
+
+            encodeURIComponent(
+              certificateId
+            )
+
+          );
+
+
+
+        const data =
+          await response.json();
+
+
+
+        /* ===============================
+           VALID CERTIFICATE
+        =============================== */
+
+        if (
+          response.ok &&
+          data.valid
+        ) {
+
+
+          const certificate =
+            data.certificate;
+
+
+
+          const issuedDate =
+            new Date(
+              certificate.issuedAt
+            );
+
+
+
+          result.className =
+            "result valid";
+
+
+
+          result.innerHTML = `
+
+            <div class="verified-title">
+
+              ✓ Certificate Verified
+
+            </div>
+
+
+            <div class="details">
+
+
+              <div class="detail">
+
+                <span class="label">
+                  Student Name
+                </span>
+
+                <span class="value">
+
+                  ${escapeHTML(
+                    certificate.studentName
+                  )}
+
+                </span>
+
+              </div>
+
+
+
+              <div class="detail">
+
+                <span class="label">
+                  Course
+                </span>
+
+                <span class="value">
+
+                  ${escapeHTML(
+                    certificate.course
+                  )}
+
+                </span>
+
+              </div>
+
+
+
+              <div class="detail">
+
+                <span class="label">
+                  Certificate ID
+                </span>
+
+                <span class="value">
+
+                  ${escapeHTML(
+                    certificate.certificateId
+                  )}
+
+                </span>
+
+              </div>
+
+
+
+              <div class="detail">
+
+                <span class="label">
+                  Issued Date
+                </span>
+
+                <span class="value">
+
+                  ${issuedDate.toLocaleDateString(
+                    "en-IN",
+                    {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric"
+                    }
+                  )}
+
+                </span>
+
+              </div>
+
+
+
+              <div class="detail">
+
+                <span class="label">
+                  Status
+                </span>
+
+                <span class="value status">
+
+                  ✓ VALID CERTIFICATE
+
+                </span>
+
+              </div>
+
+
+            </div>
+
+          `;
+
+
+        }
+
+
+        /* ===============================
+           INVALID CERTIFICATE
+        =============================== */
+
+        else {
+
+
+          result.className =
+            "result invalid";
+
+
+          result.innerHTML = `
+
+            <div class="invalid-title">
+
+              ✕ Certificate Not Found
+
+            </div>
+
+
+            <p>
+
+              ${
+                escapeHTML(
+                  data.message ||
+                  "This certificate ID is invalid."
+                )
+              }
+
+            </p>
+
+          `;
+
+        }
+
+
+      } catch (error) {
+
+
+        console.error(
+          "Verification error:",
+          error
+        );
+
+
+        result.className =
+          "result invalid";
+
+
+        result.innerHTML = `
+
+          <div class="invalid-title">
+
+            ⚠ Server Connection Error
+
+          </div>
+
+
+          <p>
+
+            Unable to connect to the
+            certificate server.
+
+            <br><br>
+
+            Please make sure your backend
+            server is running.
+
+          </p>
+
+        `;
+
+      }
+
+    }
+
+
+
+    /* ===============================
+       ENTER KEY
+    =============================== */
+
+    document
+      .getElementById(
+        "certificateId"
+      )
+      .addEventListener(
+        "keydown",
+        function(event) {
+
+          if (
+            event.key === "Enter"
+          ) {
+
+            verifyCertificate();
+
+          }
+
+        }
+      );
+
+
+
+    /* ===============================
+       SECURITY HELPER
+    =============================== */
+
+    function escapeHTML(value) {
+
+      return String(value)
+
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+
+        .replace(
+          /</g,
+          "&lt;"
+        )
+
+        .replace(
+          />/g,
+          "&gt;"
+        )
+
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+
+        .replace(
+          /'/g,
+          "&#039;"
+        );
+
+    }
+
+
+
+    /* ===============================
+       AUTO VERIFY
+    =============================== */
+
+    if (savedCertificateId) {
+
+      verifyCertificate();
+
+    }
+
+  </script>
+
+
+</body>
+
+</html>
